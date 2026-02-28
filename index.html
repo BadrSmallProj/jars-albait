@@ -7,1004 +7,460 @@
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0a0f;
-    --card: #13131a;
-    --border: #2a2a3a;
-    --gold: #f5c842;
-    --gold2: #e8a020;
-    --red: #ff3b3b;
-    --green: #00e676;
-    --text: #f0f0f0;
-    --muted: #888;
+    --bg: #0a0a0f; --card: #13131a; --border: #2a2a3a;
+    --gold: #f5c842; --gold2: #e8a020; --red: #ff3b3b;
+    --green: #00e676; --text: #f0f0f0; --muted: #888;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Tajawal', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow-x: hidden;
-  }
-
-  /* Noise texture */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .screen { display: none; width: 100%; max-width: 480px; padding: 20px; position: relative; z-index: 1; }
+  body { font-family: 'Tajawal', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+  .screen { display: none; width: 100%; max-width: 480px; padding: 20px; }
   .screen.active { display: flex; flex-direction: column; align-items: center; }
-
-  /* Logo */
-  .logo {
-    font-size: 2.2rem;
-    font-weight: 900;
-    color: var(--gold);
-    letter-spacing: -1px;
-    margin-bottom: 4px;
-    text-shadow: 0 0 30px rgba(245,200,66,0.4);
-  }
+  .logo { font-size: 2.2rem; font-weight: 900; color: var(--gold); letter-spacing: -1px; margin-bottom: 4px; text-shadow: 0 0 30px rgba(245,200,66,0.4); }
   .logo span { color: var(--text); }
   .tagline { color: var(--muted); font-size: 0.9rem; margin-bottom: 36px; }
-
-  /* Cards */
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 28px;
-    width: 100%;
-    margin-bottom: 16px;
-  }
-
-  .card-title {
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--muted);
-    margin-bottom: 18px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 0.8rem;
-  }
-
-  /* Buttons */
-  .btn {
-    width: 100%;
-    padding: 16px;
-    border-radius: 14px;
-    border: none;
-    font-family: 'Tajawal', sans-serif;
-    font-size: 1.05rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.15s;
-    margin-bottom: 10px;
-  }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 28px; width: 100%; margin-bottom: 16px; }
+  .card-title { font-size: 0.8rem; font-weight: 700; color: var(--muted); margin-bottom: 18px; text-transform: uppercase; letter-spacing: 1px; }
+  .btn { width: 100%; padding: 16px; border-radius: 14px; border: none; font-family: 'Tajawal', sans-serif; font-size: 1.05rem; font-weight: 700; cursor: pointer; transition: all 0.15s; margin-bottom: 10px; }
   .btn:active { transform: scale(0.97); }
-
-  .btn-gold {
-    background: linear-gradient(135deg, var(--gold), var(--gold2));
-    color: #000;
-    box-shadow: 0 4px 20px rgba(245,200,66,0.3);
-  }
-  .btn-gold:hover { box-shadow: 0 6px 28px rgba(245,200,66,0.5); }
-
-  .btn-outline {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--text);
-  }
-  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
-
-  .btn-red {
-    background: linear-gradient(135deg, #ff3b3b, #cc0000);
-    color: #fff;
-    box-shadow: 0 4px 20px rgba(255,59,59,0.3);
-  }
-
-  .btn-green {
-    background: linear-gradient(135deg, #00e676, #00b050);
-    color: #000;
-  }
-
-  /* Input */
-  input, select {
-    width: 100%;
-    background: #1a1a25;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px 16px;
-    color: var(--text);
-    font-family: 'Tajawal', sans-serif;
-    font-size: 1rem;
-    margin-bottom: 12px;
-    outline: none;
-    transition: border-color 0.2s;
-  }
+  .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold2)); color: #000; box-shadow: 0 4px 20px rgba(245,200,66,0.3); }
+  .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+  input, select { width: 100%; background: #1a1a25; border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; color: var(--text); font-family: 'Tajawal', sans-serif; font-size: 1rem; margin-bottom: 12px; outline: none; transition: border-color 0.2s; }
   input:focus, select:focus { border-color: var(--gold); }
   input::placeholder { color: var(--muted); }
-
-  /* Room code display */
-  .room-code {
-    font-size: 3.5rem;
-    font-weight: 900;
-    color: var(--gold);
-    letter-spacing: 12px;
-    text-align: center;
-    padding: 20px 0;
-    text-shadow: 0 0 40px rgba(245,200,66,0.5);
-  }
-
-  /* Player list */
-  .player-list { width: 100%; }
-  .player-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    border-radius: 12px;
-    background: #1a1a25;
-    margin-bottom: 8px;
-    border: 1px solid var(--border);
-    transition: all 0.3s;
-  }
-  .player-item.winner {
-    border-color: var(--gold);
-    background: rgba(245,200,66,0.08);
-    box-shadow: 0 0 20px rgba(245,200,66,0.2);
-  }
-  .player-avatar {
-    width: 36px; height: 36px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--gold), var(--gold2));
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 900; color: #000; font-size: 1rem;
-    flex-shrink: 0;
-  }
+  .room-code { font-size: 3.5rem; font-weight: 900; color: var(--gold); letter-spacing: 12px; text-align: center; padding: 20px 0; text-shadow: 0 0 40px rgba(245,200,66,0.5); }
+  .player-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 12px; background: #1a1a25; margin-bottom: 8px; border: 1px solid var(--border); transition: all 0.3s; }
+  .player-item.winner { border-color: var(--gold); background: rgba(245,200,66,0.08); box-shadow: 0 0 20px rgba(245,200,66,0.2); }
+  .player-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--gold2)); display: flex; align-items: center; justify-content: center; font-weight: 900; color: #000; font-size: 1rem; flex-shrink: 0; }
   .player-name { flex: 1; font-weight: 700; }
-  .player-status { font-size: 0.8rem; color: var(--muted); }
-  .player-rank { font-size: 1.2rem; }
-
-  /* Big buzzer button */
-  .buzzer-wrap {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 0;
-  }
-
-  .buzzer-btn {
-    width: 200px; height: 200px;
-    border-radius: 50%;
-    border: none;
-    background: radial-gradient(circle at 35% 35%, #ff6b6b, #cc0000, #880000);
-    box-shadow: 0 8px 0 #550000, 0 12px 40px rgba(255,59,59,0.4), inset 0 2px 4px rgba(255,255,255,0.2);
-    cursor: pointer;
-    font-family: 'Tajawal', sans-serif;
-    font-size: 1.4rem;
-    font-weight: 900;
-    color: white;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    transition: all 0.1s;
-    position: relative;
-    display: flex; align-items: center; justify-content: center;
-  }
-
-  .buzzer-btn:active, .buzzer-btn.pressed {
-    transform: translateY(6px);
-    box-shadow: 0 2px 0 #550000, 0 4px 20px rgba(255,59,59,0.3), inset 0 2px 4px rgba(255,255,255,0.2);
-  }
-
-  .buzzer-btn:disabled {
-    background: radial-gradient(circle at 35% 35%, #555, #333, #222);
-    box-shadow: 0 8px 0 #111, 0 12px 20px rgba(0,0,0,0.3);
-    cursor: not-allowed;
-    color: #666;
-  }
-
-  .buzzer-label {
-    margin-top: 20px;
-    font-size: 1.1rem;
-    color: var(--muted);
-    text-align: center;
-  }
-
-  /* Winner announcement */
-  .winner-announcement {
-    text-align: center;
-    padding: 20px;
-  }
+  .buzzer-wrap { width: 100%; display: flex; flex-direction: column; align-items: center; padding: 20px 0; }
+  .buzzer-btn { width: 200px; height: 200px; border-radius: 50%; border: none; background: radial-gradient(circle at 35% 35%, #ff6b6b, #cc0000, #880000); box-shadow: 0 8px 0 #550000, 0 12px 40px rgba(255,59,59,0.4); cursor: pointer; font-family: 'Tajawal', sans-serif; font-size: 1.4rem; font-weight: 900; color: white; transition: all 0.1s; display: flex; align-items: center; justify-content: center; }
+  .buzzer-btn:active, .buzzer-btn.pressed { transform: translateY(6px); box-shadow: 0 2px 0 #550000, 0 4px 20px rgba(255,59,59,0.3); }
+  .buzzer-btn:disabled { background: radial-gradient(circle at 35% 35%, #555, #333, #222); box-shadow: 0 8px 0 #111; cursor: not-allowed; color: #666; }
+  .buzzer-label { margin-top: 20px; font-size: 1.1rem; color: var(--muted); text-align: center; }
+  .winner-announcement { text-align: center; padding: 20px; }
   .winner-crown { font-size: 4rem; animation: bounce 0.6s infinite alternate; }
   @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
-  .winner-name-big {
-    font-size: 2.5rem;
-    font-weight: 900;
-    color: var(--gold);
-    text-shadow: 0 0 40px rgba(245,200,66,0.6);
-    margin: 10px 0 4px;
-  }
-  .winner-time {
-    font-size: 1rem;
-    color: var(--muted);
-  }
-
-  /* Timer */
-  .timer-display {
-    font-size: 5rem;
-    font-weight: 900;
-    color: var(--gold);
-    text-align: center;
-    font-variant-numeric: tabular-nums;
-    line-height: 1;
-    transition: color 0.3s;
-  }
+  .winner-name-big { font-size: 2.5rem; font-weight: 900; color: var(--gold); text-shadow: 0 0 40px rgba(245,200,66,0.6); margin: 10px 0 4px; }
+  .timer-display { font-size: 5rem; font-weight: 900; color: var(--gold); text-align: center; line-height: 1; }
   .timer-display.urgent { color: var(--red); animation: pulse 0.5s infinite; }
   @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
-
-  /* Status pill */
-  .status-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    margin-bottom: 16px;
-  }
+  .status-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; margin-bottom: 16px; }
   .status-pill.waiting { background: rgba(136,136,136,0.15); color: var(--muted); }
   .status-pill.ready { background: rgba(0,230,118,0.15); color: var(--green); }
   .status-pill.live { background: rgba(255,59,59,0.15); color: var(--red); }
   .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; animation: blink 1s infinite; }
   @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-  .divider { width: 100%; height: 1px; background: var(--border); margin: 8px 0 16px; }
-
-  /* Players count badge */
-  .count-badge {
-    display: inline-block;
-    background: rgba(245,200,66,0.15);
-    color: var(--gold);
-    border-radius: 20px;
-    padding: 4px 12px;
-    font-size: 0.9rem;
-    font-weight: 700;
-    margin-bottom: 12px;
-  }
-
-  /* Confetti */
-  .confetti-container {
-    position: fixed; inset: 0; pointer-events: none; z-index: 999;
-    overflow: hidden;
-  }
-  .confetti-piece {
-    position: absolute;
-    width: 10px; height: 10px;
-    top: -20px;
-    animation: fall linear forwards;
-  }
-  @keyframes fall {
-    to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-  }
-
-  /* Connecting dots animation */
-  .connecting {
-    display: flex; gap: 6px; justify-content: center; margin: 20px 0;
-  }
-  .connecting span {
-    width: 10px; height: 10px; border-radius: 50%;
-    background: var(--gold);
-    animation: bounce2 0.6s infinite alternate;
-  }
+  .count-badge { display: inline-block; background: rgba(245,200,66,0.15); color: var(--gold); border-radius: 20px; padding: 4px 12px; font-size: 0.9rem; font-weight: 700; margin-bottom: 12px; }
+  .host-badge { background: rgba(245,200,66,0.1); border: 1px solid rgba(245,200,66,0.3); border-radius: 8px; padding: 8px 14px; font-size: 0.85rem; color: var(--gold); margin-bottom: 16px; text-align: center; }
+  .connecting { display: flex; gap: 6px; justify-content: center; margin: 20px 0; }
+  .connecting span { width: 10px; height: 10px; border-radius: 50%; background: var(--gold); animation: b2 0.6s infinite alternate; }
   .connecting span:nth-child(2) { animation-delay: 0.2s; }
   .connecting span:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes bounce2 { from { transform: translateY(0); opacity: 0.3; } to { transform: translateY(-8px); opacity: 1; } }
-
+  @keyframes b2 { from { transform: translateY(0); opacity: 0.3; } to { transform: translateY(-8px); opacity: 1; } }
+  .flex-row { display: flex; gap: 10px; width: 100%; }
+  .flex-row .btn { margin-bottom: 0; flex: 1; }
+  .confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 999; overflow: hidden; }
+  .confetti-piece { position: absolute; width: 10px; height: 10px; top: -20px; animation: fall linear forwards; }
+  @keyframes fall { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
   select option { background: #1a1a25; }
-
   .small-text { font-size: 0.85rem; color: var(--muted); text-align: center; margin-top: 4px; }
-
-  .flex-row { display: flex; gap: 10px; }
-  .flex-row .btn { margin-bottom: 0; }
-
-  /* Host badge */
-  .host-badge {
-    background: rgba(245,200,66,0.1);
-    border: 1px solid rgba(245,200,66,0.3);
-    border-radius: 8px;
-    padding: 8px 14px;
-    font-size: 0.85rem;
-    color: var(--gold);
-    margin-bottom: 16px;
-    text-align: center;
-  }
-
-  /* Round info */
-  .round-info {
-    display: flex; justify-content: space-between;
-    margin-bottom: 16px;
-    font-size: 0.9rem;
-    color: var(--muted);
-  }
-  .round-info strong { color: var(--text); }
 </style>
 </head>
 <body>
-
 <div id="confetti-container" class="confetti-container"></div>
 
-<!-- ===== SCREEN 1: Home ===== -->
+<!-- HOME -->
 <div id="screen-home" class="screen active">
   <div class="logo">جرس <span>البيت</span> 🔔</div>
   <p class="tagline">من يضغط أول؟</p>
-
   <div class="card">
     <div class="card-title">ابدأ جلسة جديدة</div>
     <input type="text" id="host-name" placeholder="اسمك (أنت المنظم)" maxlength="20">
-    <button class="btn btn-gold" onclick="createRoom()">إنشاء غرفة جديدة</button>
+    <button class="btn btn-gold" id="btn-create">إنشاء غرفة جديدة</button>
   </div>
-
   <div class="card">
     <div class="card-title">انضم لغرفة موجودة</div>
     <input type="text" id="join-name" placeholder="اسمك" maxlength="20">
     <input type="text" id="join-code" placeholder="كود الغرفة (مثال: ABC123)" maxlength="6" style="text-transform:uppercase">
-    <button class="btn btn-outline" onclick="joinRoom()">انضم</button>
+    <button class="btn btn-outline" id="btn-join">انضم</button>
   </div>
 </div>
 
-<!-- ===== SCREEN 2: Host Lobby ===== -->
+<!-- HOST LOBBY -->
 <div id="screen-host-lobby" class="screen">
   <div class="logo">جرس <span>البيت</span> 🔔</div>
-  
   <div class="host-badge">👑 أنت المنظم</div>
-
   <div class="card" style="text-align:center">
     <div class="card-title">كود الغرفة - شاركه مع اللاعبين</div>
     <div class="room-code" id="display-code">------</div>
-    <button class="btn btn-outline" onclick="copyCode()" style="margin-top:8px">📋 نسخ الكود</button>
+    <button class="btn btn-outline" id="btn-copy" style="margin-top:8px">📋 نسخ الكود</button>
   </div>
-
   <div class="card">
     <div class="card-title">اللاعبون المنضمون</div>
     <div class="count-badge" id="player-count">0 لاعب</div>
-    <div class="player-list" id="host-player-list">
-      <p style="color:var(--muted); font-size:0.9rem; text-align:center">في انتظار اللاعبين...</p>
-    </div>
+    <div id="host-player-list"><p style="color:var(--muted);font-size:0.9rem;text-align:center">في انتظار اللاعبين...</p></div>
   </div>
-
   <div class="card">
-    <div class="card-title">إعدادات الجلسة</div>
-    <label style="color:var(--muted); font-size:0.85rem; display:block; margin-bottom:6px">مؤقت الإجابة (ثواني)</label>
+    <div class="card-title">مؤقت الإجابة</div>
     <select id="timer-setting">
       <option value="0">بدون مؤقت</option>
       <option value="10">10 ثواني</option>
       <option value="15" selected>15 ثانية</option>
       <option value="20">20 ثانية</option>
       <option value="30">30 ثانية</option>
-      <option value="60">60 ثانية</option>
     </select>
   </div>
-
-  <button class="btn btn-gold" onclick="startRound()" id="start-btn">🚀 ابدأ الجولة</button>
-  <button class="btn btn-outline" onclick="goHome()">خروج</button>
+  <button class="btn btn-gold" id="btn-start">🚀 ابدأ الجولة</button>
+  <button class="btn btn-outline" id="btn-host-exit">خروج</button>
 </div>
 
-<!-- ===== SCREEN 3: Host Game ===== -->
+<!-- HOST GAME -->
 <div id="screen-host-game" class="screen">
-  <div class="logo" style="font-size:1.5rem; margin-bottom:16px">جرس <span>البيت</span> 🔔</div>
-
-  <div id="host-status-pill" class="status-pill live"><div class="dot"></div> جلسة نشطة</div>
-
+  <div class="logo" style="font-size:1.5rem;margin-bottom:16px">جرس <span>البيت</span> 🔔</div>
+  <div class="status-pill live"><div class="dot"></div> جلسة نشطة</div>
   <div class="card" id="winner-card" style="display:none">
     <div class="winner-announcement">
       <div class="winner-crown">👑</div>
       <div class="winner-name-big" id="winner-name-display">-</div>
-      <div class="winner-time" id="winner-time-display">ضغط أول!</div>
+      <div style="color:var(--muted)">ضغط أول! ⚡</div>
     </div>
   </div>
-
   <div class="card" id="waiting-card">
-    <div style="text-align:center; padding: 20px 0">
-      <div style="font-size:3rem; margin-bottom:12px">⏳</div>
-      <div style="font-weight:700; font-size:1.1rem">في انتظار من يضغط...</div>
-      <div style="color:var(--muted); font-size:0.9rem; margin-top:6px">الجولة نشطة</div>
+    <div style="text-align:center;padding:20px 0">
+      <div style="font-size:3rem;margin-bottom:12px">⏳</div>
+      <div style="font-weight:700;font-size:1.1rem">في انتظار من يضغط...</div>
     </div>
   </div>
-
   <div class="card" id="timer-card" style="display:none">
     <div class="card-title" style="text-align:center">الوقت المتبقي</div>
     <div class="timer-display" id="countdown-display">15</div>
   </div>
-
   <div class="card">
     <div class="card-title">اللاعبون</div>
-    <div class="player-list" id="game-player-list"></div>
+    <div id="game-player-list"></div>
   </div>
-
-  <div class="flex-row" style="width:100%">
-    <button class="btn btn-gold" onclick="nextRound()" style="flex:1">جولة جديدة ▶</button>
-    <button class="btn btn-outline" onclick="endSession()" style="flex:1">إنهاء الجلسة</button>
+  <div class="flex-row">
+    <button class="btn btn-gold" id="btn-next">جولة جديدة ▶</button>
+    <button class="btn btn-outline" id="btn-end">إنهاء</button>
   </div>
 </div>
 
-<!-- ===== SCREEN 4: Player Lobby ===== -->
+<!-- PLAYER LOBBY -->
 <div id="screen-player-lobby" class="screen">
   <div class="logo">جرس <span>البيت</span> 🔔</div>
-
-  <div class="status-pill waiting" id="player-lobby-status">
-    <div class="dot"></div> في انتظار المنظم
-  </div>
-
+  <div class="status-pill waiting"><div class="dot"></div> في انتظار المنظم</div>
   <div class="card" style="text-align:center">
-    <div style="font-size:0.85rem; color:var(--muted); margin-bottom:8px">الغرفة</div>
-    <div class="room-code" style="font-size:2.5rem; letter-spacing:8px" id="player-room-code">-</div>
+    <div style="font-size:0.85rem;color:var(--muted);margin-bottom:8px">الغرفة</div>
+    <div class="room-code" style="font-size:2.5rem;letter-spacing:8px" id="player-room-code">-</div>
   </div>
-
   <div class="card">
     <div class="card-title">في الغرفة</div>
-    <div class="player-list" id="player-lobby-list"></div>
+    <div id="player-lobby-list"></div>
   </div>
-
   <div class="connecting"><span></span><span></span><span></span></div>
   <p class="small-text">انتظر حتى يبدأ المنظم الجولة</p>
 </div>
 
-<!-- ===== SCREEN 5: Player Game ===== -->
+<!-- PLAYER GAME -->
 <div id="screen-player-game" class="screen">
-  <div class="logo" style="font-size:1.5rem; margin-bottom:8px">جرس <span>البيت</span> 🔔</div>
-  
-  <div class="card" style="text-align:center; margin-bottom:12px">
-    <div style="font-size:0.85rem; color:var(--muted)">أنت</div>
-    <div style="font-weight:900; font-size:1.3rem" id="my-name-display">-</div>
+  <div class="logo" style="font-size:1.5rem;margin-bottom:8px">جرس <span>البيت</span> 🔔</div>
+  <div class="card" style="text-align:center;margin-bottom:12px">
+    <div style="font-size:0.85rem;color:var(--muted)">أنت</div>
+    <div style="font-weight:900;font-size:1.3rem" id="my-name-display">-</div>
   </div>
-
-  <div id="player-status-area">
-    <div class="status-pill waiting" id="player-game-status">
-      <div class="dot"></div> انتظر السؤال...
-    </div>
-  </div>
-
+  <div class="status-pill waiting" id="player-game-status"><div class="dot"></div> انتظر السؤال...</div>
   <div class="buzzer-wrap">
-    <button class="buzzer-btn" id="buzzer-btn" onclick="pressBuzzer()" disabled>
-      اضغط!
-    </button>
+    <button class="buzzer-btn" id="buzzer-btn" disabled>اضغط!</button>
     <div class="buzzer-label" id="buzzer-label">انتظر بداية الجولة</div>
   </div>
-
   <div class="card" id="player-timer-card" style="display:none">
     <div class="timer-display" id="player-countdown">15</div>
   </div>
-
   <div class="card" id="player-result-card" style="display:none">
     <div class="winner-announcement" id="player-result-content"></div>
   </div>
 </div>
 
-<!-- ===== SCREEN 6: Session End ===== -->
+<!-- END -->
 <div id="screen-end" class="screen">
   <div class="logo">جرس <span>البيت</span> 🔔</div>
-  <div style="font-size:2rem; margin-bottom:8px; text-align:center">🎉 انتهت الجلسة!</div>
-
+  <div style="font-size:2rem;margin-bottom:16px;text-align:center">🎉 انتهت الجلسة!</div>
   <div class="card">
-    <div class="card-title">نتائج الجلسة</div>
-    <div class="player-list" id="final-scores"></div>
+    <div class="card-title">اللاعبون</div>
+    <div id="final-scores"></div>
   </div>
-
-  <button class="btn btn-gold" onclick="goHome()">العب مجدداً</button>
+  <button class="btn btn-gold" id="btn-replay">العب مجدداً</button>
 </div>
 
-<script>
-// ==================== STATE ====================
-const state = {
-  myName: '',
-  myRole: '', // 'host' or 'player'
-  roomCode: '',
-  players: {},      // { name: { score, pressTime } }
-  roundActive: false,
-  roundWinner: null,
-  timerSetting: 15,
-  timerInterval: null,
-  timerLeft: 0,
-  // Simulate real-time via localStorage + polling
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, set, get, update, onValue, off } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCY7hzK7j4qKpfGFO38GGRl9rojsK06MTw",
+  authDomain: "jars-albait.firebaseapp.com",
+  databaseURL: "https://jars-albait-default-rtdb.firebaseio.com",
+  projectId: "jars-albait",
+  storageBucket: "jars-albait.firebasestorage.app",
+  messagingSenderId: "305150537977",
+  appId: "1:305150537977:web:a29c5e290ee839ff157228"
 };
 
-// ==================== STORAGE / SYNC ====================
-// Using localStorage to simulate real-time between tabs
-// Room data key: room_XXXX
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-function getRoomData(code) {
-  try {
-    const d = localStorage.getItem('room_' + code);
-    return d ? JSON.parse(d) : null;
-  } catch { return null; }
-}
+const state = {
+  myName: '', myRole: '', roomCode: '',
+  roundWinner: null, timerInterval: null,
+  currentRoundId: 0, listener: null
+};
 
-function setRoomData(code, data) {
-  localStorage.setItem('room_' + code, JSON.stringify(data));
-  localStorage.setItem('room_' + code + '_ts', Date.now());
-}
-
-function generateCode() {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  let code = '';
-  for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
-  return code;
-}
-
-let pollInterval = null;
-
-function startPolling(fn, interval = 500) {
-  stopPolling();
-  pollInterval = setInterval(fn, interval);
-}
-
-function stopPolling() {
-  if (pollInterval) { clearInterval(pollInterval); pollInterval = null; }
-}
-
-// ==================== SCREEN MANAGEMENT ====================
+// ---- UTILS ----
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('screen-' + id).classList.add('active');
 }
 
-function goHome() {
-  stopPolling();
-  clearTimer();
-  showScreen('home');
-}
-
-// ==================== HOST: CREATE ROOM ====================
-function createRoom() {
-  const name = document.getElementById('host-name').value.trim();
-  if (!name) { alert('من فضلك أدخل اسمك'); return; }
-
-  state.myName = name;
-  state.myRole = 'host';
-  state.roomCode = generateCode();
-
-  const roomData = {
-    code: state.roomCode,
-    host: name,
-    players: { [name]: { score: 0, isHost: true } },
-    roundActive: false,
-    roundWinner: null,
-    timerSetting: 15,
-    createdAt: Date.now(),
-    roundId: 0,
-  };
-
-  setRoomData(state.roomCode, roomData);
-  state.players = roomData.players;
-
-  document.getElementById('display-code').textContent = state.roomCode;
-  showScreen('host-lobby');
-
-  startPolling(pollHostLobby);
-}
-
-function pollHostLobby() {
-  const room = getRoomData(state.roomCode);
-  if (!room) return;
-  state.players = room.players;
-  renderHostLobbyPlayers();
-}
-
-function renderHostLobbyPlayers() {
-  const list = document.getElementById('host-player-list');
-  const names = Object.keys(state.players);
-  document.getElementById('player-count').textContent = names.length + ' لاعب';
-
-  if (names.length === 0) {
-    list.innerHTML = '<p style="color:var(--muted); font-size:0.9rem; text-align:center">في انتظار اللاعبين...</p>';
-    return;
-  }
-
-  list.innerHTML = names.map(n => `
-    <div class="player-item">
-      <div class="player-avatar">${n[0]}</div>
-      <div class="player-name">${n}${state.players[n].isHost ? ' 👑' : ''}</div>
-      <div class="player-status">جاهز</div>
-    </div>
-  `).join('');
-}
-
-function copyCode() {
-  navigator.clipboard.writeText(state.roomCode).then(() => {
-    alert('تم نسخ الكود: ' + state.roomCode);
-  }).catch(() => {
-    prompt('انسخ الكود:', state.roomCode);
-  });
-}
-
-// ==================== PLAYER: JOIN ROOM ====================
-function joinRoom() {
-  const name = document.getElementById('join-name').value.trim();
-  const code = document.getElementById('join-code').value.trim().toUpperCase();
-
-  if (!name) { alert('من فضلك أدخل اسمك'); return; }
-  if (code.length !== 6) { alert('الكود يجب أن يكون 6 خانات'); return; }
-
-  const room = getRoomData(code);
-  if (!room) { alert('لم يتم العثور على غرفة بهذا الكود'); return; }
-  if (room.players[name]) { alert('هذا الاسم مستخدم بالفعل، اختر اسماً آخر'); return; }
-
-  state.myName = name;
-  state.myRole = 'player';
-  state.roomCode = code;
-
-  // Add player to room
-  room.players[name] = { score: 0, isHost: false };
-  setRoomData(code, room);
-  state.players = room.players;
-
-  document.getElementById('player-room-code').textContent = code;
-  showScreen('player-lobby');
-
-  startPolling(pollPlayerLobby);
-}
-
-function pollPlayerLobby() {
-  const room = getRoomData(state.roomCode);
-  if (!room) return;
-  state.players = room.players;
-
-  // Update lobby player list
-  const list = document.getElementById('player-lobby-list');
-  const names = Object.keys(room.players);
-  list.innerHTML = names.map(n => `
-    <div class="player-item">
-      <div class="player-avatar">${n[0]}</div>
-      <div class="player-name">${n}${room.players[n].isHost ? ' 👑' : ''}</div>
-    </div>
-  `).join('');
-
-  // If round started
-  if (room.roundActive || room.roundId > 0) {
-    const prevRoundId = state.currentRoundId || 0;
-    if (room.roundId > prevRoundId) {
-      state.currentRoundId = room.roundId;
-      state.timerSetting = room.timerSetting;
-      stopPolling();
-      enterPlayerGame(room);
-    }
-  }
-}
-
-// ==================== HOST: START ROUND ====================
-function startRound() {
-  const room = getRoomData(state.roomCode);
-  if (!room) return;
-
-  const timerVal = parseInt(document.getElementById('timer-setting').value);
-  room.timerSetting = timerVal;
-  room.roundActive = true;
-  room.roundWinner = null;
-  room.roundId = (room.roundId || 0) + 1;
-  room.roundStartTime = Date.now();
-  setRoomData(state.roomCode, room);
-
-  state.timerSetting = timerVal;
-  state.roundActive = true;
-  state.roundWinner = null;
-  state.currentRoundId = room.roundId;
-
-  showScreen('host-game');
-  renderGamePlayerList();
-
-  document.getElementById('winner-card').style.display = 'none';
-  document.getElementById('waiting-card').style.display = 'block';
-
-  // Start timer if set
-  if (timerVal > 0) {
-    document.getElementById('timer-card').style.display = 'block';
-    startHostTimer(timerVal);
-  } else {
-    document.getElementById('timer-card').style.display = 'none';
-  }
-
-  startPolling(pollHostGame);
-}
-
-function pollHostGame() {
-  const room = getRoomData(state.roomCode);
-  if (!room) return;
-  state.players = room.players;
-  renderGamePlayerList();
-
-  if (room.roundWinner && !state.roundWinner) {
-    state.roundWinner = room.roundWinner;
-    showWinner(room.roundWinner, room.roundWinnerTime);
-  }
-}
-
-function showWinner(name, pressTime) {
-  clearTimer();
-  document.getElementById('waiting-card').style.display = 'none';
-  document.getElementById('winner-card').style.display = 'block';
-  document.getElementById('winner-name-display').textContent = name;
-  document.getElementById('winner-time-display').textContent = '⚡ ضغط أول!';
-  launchConfetti();
-}
-
-function renderGamePlayerList() {
-  const list = document.getElementById('game-player-list');
-  const names = Object.keys(state.players);
-  list.innerHTML = names.map(n => {
-    const isWinner = n === state.roundWinner;
-    return `
-      <div class="player-item ${isWinner ? 'winner' : ''}">
-        <div class="player-avatar">${n[0]}</div>
-        <div class="player-name">${n}${state.players[n].isHost ? ' 👑' : ''}</div>
-        <div class="player-rank">${isWinner ? '👑' : ''}</div>
-      </div>
-    `;
-  }).join('');
-}
-
-function startHostTimer(seconds) {
-  clearTimer();
-  state.timerLeft = seconds;
-  document.getElementById('countdown-display').textContent = seconds;
-  document.getElementById('countdown-display').classList.remove('urgent');
-
-  state.timerInterval = setInterval(() => {
-    state.timerLeft--;
-    document.getElementById('countdown-display').textContent = state.timerLeft;
-    if (state.timerLeft <= 5) {
-      document.getElementById('countdown-display').classList.add('urgent');
-    }
-    if (state.timerLeft <= 0) {
-      clearTimer();
-      if (!state.roundWinner) {
-        // Time's up
-        document.getElementById('waiting-card').innerHTML = `
-          <div style="text-align:center; padding:20px 0">
-            <div style="font-size:3rem">⏰</div>
-            <div style="font-weight:700; font-size:1.1rem; margin-top:12px">انتهى الوقت!</div>
-            <div style="color:var(--muted); font-size:0.9rem">لم يضغط أحد</div>
-          </div>`;
-      }
-    }
-  }, 1000);
+function stopListening() {
+  if (state.listener) { off(state.listener); state.listener = null; }
 }
 
 function clearTimer() {
   if (state.timerInterval) { clearInterval(state.timerInterval); state.timerInterval = null; }
 }
 
-function nextRound() {
-  clearTimer();
-  state.roundWinner = null;
-  showScreen('host-lobby');
-  stopPolling();
-
-  const room = getRoomData(state.roomCode);
-  if (room) {
-    room.roundActive = false;
-    room.roundWinner = null;
-    setRoomData(state.roomCode, room);
-  }
-
-  renderHostLobbyPlayers();
-  startPolling(pollHostLobby);
+function generateCode() {
+  const c = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  return Array.from({length:6}, () => c[Math.floor(Math.random()*c.length)]).join('');
 }
 
-function endSession() {
-  stopPolling();
-  clearTimer();
-
-  const room = getRoomData(state.roomCode);
-  if (room) {
-    room.roundActive = false;
-    room.sessionEnded = true;
-    setRoomData(state.roomCode, room);
+function launchConfetti() {
+  const colors = ['#f5c842','#ff3b3b','#00e676','#4da6ff','#ff6bdf'];
+  const cont = document.getElementById('confetti-container');
+  for (let i = 0; i < 60; i++) {
+    const p = document.createElement('div');
+    p.className = 'confetti-piece';
+    p.style.cssText = `left:${Math.random()*100}vw;background:${colors[i%5]};border-radius:${Math.random()>.5?'50%':'0'};animation-duration:${1.5+Math.random()*2}s;animation-delay:${Math.random()*.5}s`;
+    cont.appendChild(p);
+    setTimeout(() => p.remove(), 4000);
   }
-
-  showScreen('end');
-  renderFinalScores();
 }
 
-function renderFinalScores() {
-  const list = document.getElementById('final-scores');
-  const names = Object.keys(state.players);
-  if (names.length === 0) {
-    list.innerHTML = '<p style="color:var(--muted); text-align:center">لا يوجد بيانات</p>';
-    return;
-  }
-  list.innerHTML = names.map((n, i) => `
-    <div class="player-item">
+function startCountdown(seconds, elId, onEnd) {
+  clearTimer();
+  let left = seconds;
+  const el = document.getElementById(elId);
+  el.textContent = left;
+  el.classList.remove('urgent');
+  state.timerInterval = setInterval(() => {
+    left--;
+    el.textContent = left;
+    if (left <= 5) el.classList.add('urgent');
+    if (left <= 0) { clearTimer(); if (onEnd) onEnd(); }
+  }, 1000);
+}
+
+function renderPlayers(containerId, players, winner) {
+  document.getElementById(containerId).innerHTML = Object.keys(players||{}).map(n => `
+    <div class="player-item ${n===winner?'winner':''}">
       <div class="player-avatar">${n[0]}</div>
-      <div class="player-name">${n}</div>
-      <div style="color:var(--gold); font-weight:700">${['🥇','🥈','🥉'][i] || ''}</div>
-    </div>
-  `).join('');
+      <div class="player-name">${n}${players[n].isHost?' 👑':''}</div>
+      <div>${n===winner?'👑':''}</div>
+    </div>`).join('') || '<p style="color:var(--muted);text-align:center">لا أحد بعد</p>';
 }
 
-// ==================== PLAYER GAME ====================
+// ---- HOME ----
+document.getElementById('btn-create').onclick = async () => {
+  const name = document.getElementById('host-name').value.trim();
+  if (!name) return alert('أدخل اسمك');
+  state.myName = name; state.myRole = 'host';
+  state.roomCode = generateCode();
+  await set(ref(db, 'rooms/'+state.roomCode), {
+    host: name, players: {[name]:{isHost:true}},
+    roundActive: false, roundWinner: null,
+    timerSetting: 15, roundId: 0, roundStartTime: 0,
+    createdAt: Date.now()
+  });
+  document.getElementById('display-code').textContent = state.roomCode;
+  showScreen('host-lobby');
+  listenHostLobby();
+};
+
+document.getElementById('btn-join').onclick = async () => {
+  const name = document.getElementById('join-name').value.trim();
+  const code = document.getElementById('join-code').value.trim().toUpperCase();
+  if (!name) return alert('أدخل اسمك');
+  if (code.length !== 6) return alert('الكود 6 خانات');
+  const snap = await get(ref(db, 'rooms/'+code));
+  if (!snap.exists()) return alert('غرفة غير موجودة');
+  const room = snap.val();
+  if (room.players?.[name]) return alert('الاسم مستخدم، اختر اسماً آخر');
+  state.myName = name; state.myRole = 'player'; state.roomCode = code;
+  state.currentRoundId = room.roundId || 0;
+  await update(ref(db, 'rooms/'+code+'/players/'+name), {isHost:false});
+  document.getElementById('player-room-code').textContent = code;
+  document.getElementById('my-name-display').textContent = name;
+  showScreen('player-lobby');
+  listenPlayerLobby();
+};
+
+document.getElementById('btn-replay').onclick = () => { stopListening(); clearTimer(); showScreen('home'); };
+
+// ---- HOST LOBBY ----
+document.getElementById('btn-copy').onclick = () => {
+  navigator.clipboard.writeText(state.roomCode).catch(()=>{}).then(()=> alert('تم نسخ الكود: '+state.roomCode));
+};
+document.getElementById('btn-host-exit').onclick = () => { stopListening(); clearTimer(); showScreen('home'); };
+
+function listenHostLobby() {
+  stopListening();
+  const r = ref(db, 'rooms/'+state.roomCode);
+  state.listener = r;
+  onValue(r, snap => {
+    const room = snap.val(); if (!room) return;
+    const players = room.players || {};
+    document.getElementById('player-count').textContent = Object.keys(players).length + ' لاعب';
+    renderPlayers('host-player-list', players, null);
+  });
+}
+
+// ---- HOST GAME ----
+document.getElementById('btn-start').onclick = async () => {
+  const timerVal = parseInt(document.getElementById('timer-setting').value);
+  const snap = await get(ref(db, 'rooms/'+state.roomCode));
+  const room = snap.val();
+  const newId = (room.roundId||0) + 1;
+  await update(ref(db, 'rooms/'+state.roomCode), {
+    roundActive: true, roundWinner: null,
+    timerSetting: timerVal, roundId: newId, roundStartTime: Date.now()
+  });
+  state.roundWinner = null; state.currentRoundId = newId;
+  document.getElementById('winner-card').style.display = 'none';
+  document.getElementById('waiting-card').style.display = 'block';
+  document.getElementById('waiting-card').innerHTML = `<div style="text-align:center;padding:20px 0"><div style="font-size:3rem;margin-bottom:12px">⏳</div><div style="font-weight:700;font-size:1.1rem">في انتظار من يضغط...</div></div>`;
+  if (timerVal > 0) {
+    document.getElementById('timer-card').style.display = 'block';
+    startCountdown(timerVal, 'countdown-display', () => {
+      if (!state.roundWinner) document.getElementById('waiting-card').innerHTML = `<div style="text-align:center;padding:20px 0"><div style="font-size:3rem">⏰</div><div style="font-weight:700;font-size:1.1rem;margin-top:12px">انتهى الوقت!</div></div>`;
+    });
+  } else { document.getElementById('timer-card').style.display = 'none'; }
+  showScreen('host-game');
+  listenHostGame();
+};
+
+document.getElementById('btn-next').onclick = async () => {
+  clearTimer(); state.roundWinner = null;
+  await update(ref(db, 'rooms/'+state.roomCode), {roundActive:false, roundWinner:null});
+  showScreen('host-lobby'); listenHostLobby();
+};
+
+document.getElementById('btn-end').onclick = async () => {
+  clearTimer(); stopListening();
+  await update(ref(db, 'rooms/'+state.roomCode), {roundActive:false, sessionEnded:true});
+  const snap = await get(ref(db, 'rooms/'+state.roomCode+'/players'));
+  const players = snap.val() || {};
+  renderPlayers('final-scores', players, null);
+  showScreen('end');
+};
+
+function listenHostGame() {
+  stopListening();
+  const r = ref(db, 'rooms/'+state.roomCode);
+  state.listener = r;
+  onValue(r, snap => {
+    const room = snap.val(); if (!room) return;
+    renderPlayers('game-player-list', room.players||{}, room.roundWinner);
+    if (room.roundWinner && !state.roundWinner) {
+      state.roundWinner = room.roundWinner;
+      clearTimer();
+      document.getElementById('waiting-card').style.display = 'none';
+      document.getElementById('winner-card').style.display = 'block';
+      document.getElementById('winner-name-display').textContent = room.roundWinner;
+      launchConfetti();
+    }
+  });
+}
+
+// ---- PLAYER LOBBY ----
+function listenPlayerLobby() {
+  stopListening();
+  const r = ref(db, 'rooms/'+state.roomCode);
+  state.listener = r;
+  onValue(r, snap => {
+    const room = snap.val(); if (!room) return;
+    renderPlayers('player-lobby-list', room.players||{}, null);
+    if (room.roundId > state.currentRoundId && room.roundActive) {
+      state.currentRoundId = room.roundId;
+      off(r); state.listener = null;
+      enterPlayerGame(room);
+    }
+  });
+}
+
+// ---- PLAYER GAME ----
 function enterPlayerGame(room) {
-  state.roundActive = true;
   state.roundWinner = null;
-  state.timerSetting = room.timerSetting;
-
-  document.getElementById('my-name-display').textContent = state.myName;
-
   const statusEl = document.getElementById('player-game-status');
   statusEl.className = 'status-pill ready';
   statusEl.innerHTML = '<div class="dot"></div> الجولة بدأت! اضغط الجرس!';
-
   const buzzer = document.getElementById('buzzer-btn');
-  buzzer.disabled = false;
+  buzzer.disabled = false; buzzer.classList.remove('pressed');
   document.getElementById('buzzer-label').textContent = 'اضغط بسرعة!';
-
   document.getElementById('player-result-card').style.display = 'none';
-
   if (room.timerSetting > 0) {
     document.getElementById('player-timer-card').style.display = 'block';
-    startPlayerTimer(room.timerSetting);
-  }
-
+    startCountdown(room.timerSetting, 'player-countdown', () => { if (!state.roundWinner) showPlayerResult(null); });
+  } else { document.getElementById('player-timer-card').style.display = 'none'; }
   showScreen('player-game');
-  startPolling(pollPlayerGame, 300);
+  listenPlayerGame();
 }
 
-function pollPlayerGame() {
-  const room = getRoomData(state.roomCode);
-  if (!room) return;
-
-  // Check if new round started (to re-enable buzzer)
-  if (room.roundId > state.currentRoundId) {
-    state.currentRoundId = room.roundId;
-    state.roundWinner = null;
-    clearTimer();
-    resetBuzzer(room);
-    return;
-  }
-
-  if (room.roundWinner && room.roundWinner !== state.roundWinner) {
-    state.roundWinner = room.roundWinner;
-    clearTimer();
-    showPlayerResult(room.roundWinner);
-  }
-
-  if (room.timerSetting > 0 && !room.roundWinner) {
-    const elapsed = (Date.now() - room.roundStartTime) / 1000;
-    const left = Math.max(0, room.timerSetting - elapsed);
-    document.getElementById('player-countdown').textContent = Math.ceil(left);
-    if (left <= 5) document.getElementById('player-countdown').classList.add('urgent');
-    if (left <= 0 && !state.roundWinner) {
-      showPlayerResult(null);
+function listenPlayerGame() {
+  stopListening();
+  const r = ref(db, 'rooms/'+state.roomCode);
+  state.listener = r;
+  onValue(r, snap => {
+    const room = snap.val(); if (!room) return;
+    if (room.roundId > state.currentRoundId && room.roundActive) {
+      state.currentRoundId = room.roundId; state.roundWinner = null;
+      clearTimer(); off(r); state.listener = null;
+      enterPlayerGame(room); return;
     }
-  }
+    if (room.roundWinner && room.roundWinner !== state.roundWinner) {
+      state.roundWinner = room.roundWinner;
+      clearTimer(); showPlayerResult(room.roundWinner);
+    }
+  });
 }
 
-function resetBuzzer(room) {
-  const buzzer = document.getElementById('buzzer-btn');
-  buzzer.disabled = false;
-  buzzer.classList.remove('pressed');
-  document.getElementById('buzzer-label').textContent = 'اضغط بسرعة!';
-  document.getElementById('player-result-card').style.display = 'none';
-  state.timerSetting = room.timerSetting;
-
-  const statusEl = document.getElementById('player-game-status');
-  statusEl.className = 'status-pill ready';
-  statusEl.innerHTML = '<div class="dot"></div> جولة جديدة! اضغط الجرس!';
-
-  if (room.timerSetting > 0) {
-    document.getElementById('player-timer-card').style.display = 'block';
-    startPlayerTimer(room.timerSetting);
-  }
-}
-
-function startPlayerTimer(seconds) {
-  clearTimer();
-  document.getElementById('player-countdown').textContent = seconds;
-  document.getElementById('player-countdown').classList.remove('urgent');
-}
-
-function pressBuzzer() {
+document.getElementById('buzzer-btn').onclick = async () => {
   const buzzer = document.getElementById('buzzer-btn');
   if (buzzer.disabled) return;
-
-  const pressTime = Date.now();
-  buzzer.classList.add('pressed');
-  buzzer.disabled = true;
-  document.getElementById('buzzer-label').textContent = 'تم الضغط!';
+  buzzer.disabled = true; buzzer.classList.add('pressed');
   clearTimer();
-
-  // Write to room
-  const room = getRoomData(state.roomCode);
-  if (!room) return;
-
+  const snap = await get(ref(db, 'rooms/'+state.roomCode));
+  const room = snap.val();
   if (!room.roundWinner) {
-    room.roundWinner = state.myName;
-    room.roundWinnerTime = pressTime;
-    room.roundActive = false;
-    setRoomData(state.roomCode, room);
+    await update(ref(db, 'rooms/'+state.roomCode), {roundWinner: state.myName, roundActive: false});
     state.roundWinner = state.myName;
     showPlayerResult(state.myName);
   }
-}
+};
 
 function showPlayerResult(winner) {
-  const buzzer = document.getElementById('buzzer-btn');
-  buzzer.disabled = true;
+  document.getElementById('buzzer-btn').disabled = true;
   document.getElementById('player-timer-card').style.display = 'none';
-
-  const resultCard = document.getElementById('player-result-card');
-  const resultContent = document.getElementById('player-result-content');
-  resultCard.style.display = 'block';
-
-  if (winner === null) {
-    resultContent.innerHTML = `
-      <div style="font-size:3rem">⏰</div>
-      <div style="font-size:1.5rem; font-weight:900; margin-top:12px; color:var(--muted)">انتهى الوقت!</div>
-    `;
+  document.getElementById('player-result-card').style.display = 'block';
+  const c = document.getElementById('player-result-content');
+  if (!winner) {
+    c.innerHTML = `<div style="font-size:3rem">⏰</div><div style="font-size:1.5rem;font-weight:900;margin-top:12px;color:var(--muted)">انتهى الوقت!</div>`;
   } else if (winner === state.myName) {
-    resultContent.innerHTML = `
-      <div class="winner-crown">👑</div>
-      <div class="winner-name-big">أنت الأول!</div>
-      <div class="winner-time">ضغطت أول! 🎉</div>
-    `;
+    c.innerHTML = `<div class="winner-crown">👑</div><div class="winner-name-big">أنت الأول!</div><div style="color:var(--muted)">ضغطت أول! 🎉</div>`;
     launchConfetti();
-    const statusEl = document.getElementById('player-game-status');
-    statusEl.className = 'status-pill ready';
-    statusEl.innerHTML = '🏆 أنت الفائز!';
   } else {
-    resultContent.innerHTML = `
-      <div style="font-size:3rem">😔</div>
-      <div style="font-size:1.3rem; font-weight:900; margin-top:12px; color:var(--red)">سبقك ${winner}!</div>
-      <div style="color:var(--muted); margin-top:6px; font-size:0.9rem">حظاً أوفر في الجولة القادمة</div>
-    `;
-    const statusEl = document.getElementById('player-game-status');
-    statusEl.className = 'status-pill live';
-    statusEl.innerHTML = `<div class="dot"></div> فاز ${winner}`;
+    c.innerHTML = `<div style="font-size:3rem">😔</div><div style="font-size:1.3rem;font-weight:900;margin-top:12px;color:var(--red)">سبقك ${winner}!</div><div style="color:var(--muted);margin-top:6px">حظاً أوفر! 💪</div>`;
   }
 }
-
-// ==================== CONFETTI ====================
-function launchConfetti() {
-  const container = document.getElementById('confetti-container');
-  const colors = ['#f5c842', '#ff3b3b', '#00e676', '#4da6ff', '#ff6bdf'];
-  for (let i = 0; i < 60; i++) {
-    const piece = document.createElement('div');
-    piece.className = 'confetti-piece';
-    piece.style.left = Math.random() * 100 + 'vw';
-    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-    piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-    piece.style.animationDuration = (1.5 + Math.random() * 2) + 's';
-    piece.style.animationDelay = (Math.random() * 0.5) + 's';
-    piece.style.transform = `rotate(${Math.random() * 360}deg)`;
-    container.appendChild(piece);
-    setTimeout(() => piece.remove(), 4000);
-  }
-}
-
-// ==================== INIT ====================
-// Clean old rooms on load
-window.addEventListener('load', () => {
-  // Remove rooms older than 2 hours
-  const now = Date.now();
-  for (let key in localStorage) {
-    if (key.startsWith('room_') && !key.endsWith('_ts')) {
-      const ts = localStorage.getItem(key + '_ts');
-      if (ts && now - parseInt(ts) > 7200000) {
-        localStorage.removeItem(key);
-        localStorage.removeItem(key + '_ts');
-      }
-    }
-  }
-});
 </script>
 </body>
 </html>
